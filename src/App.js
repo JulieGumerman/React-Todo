@@ -5,9 +5,12 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      task: "",
-      id: Date.now(),
-      completed: false
+      stuffToDo : [
+       {task: "",
+       id: Date.now(),
+       completed: false
+      }
+      ]
     }
   }
   // you will need a place to store your state in this component.
@@ -15,25 +18,24 @@ class App extends React.Component {
   // this component is going to take care of state, and any change handlers you need to work with your state
   manageSubmit = event => {
     event.preventDefault();
-    console.log("Submit that shit!");
+    console.log("Submission!!!");
   }
-
-  addItem = event => {
-  let items = [];    
+  
+  handleChange = event => {
     console.log(event.target.value);
-    items.push(event.target.value);
-    items.map(item => <p>{item}</p>);
+    this.setState({task: event.target.value, id: Date.now(), completed: false});
+    console.log("l'etat, c'est moi!", this.state);
   }
 
   render() {
     return (
       <div>
         <h2>Welcome to your Todo App!</h2>
-        <div onSubmit={this.manageSubmit}>
-            <input type="text" placeholder="to do" onChange={this.addItem}></input>
+        <form onSubmit={event =>this.manageSubmit(event)}>
+            <input type="text" placeholder="to do" onChange={this.handleChange}></input>
             <button type="submit">Commit to the thing!</button>
             <button>Clear all!</button>
-        </div>
+        </form>
       </div>
     );
   }

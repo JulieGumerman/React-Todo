@@ -5,10 +5,13 @@ import React from "react";
 
 const TodoList = props => {
     
+    const clicked = () => {
+        alert(`You clicked on me! Ouch!`);
+    }
 
     return (
         <ul>
-            {props.state.stuffToDo.map(thing => <li key={thing.id}>{thing.task}</li>)}
+            {props.state.stuffToDo.map(thing => <li key={thing.id} onClick={clicked}>{thing.task}</li>)}
         </ul>
     );
 }

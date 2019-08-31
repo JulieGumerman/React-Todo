@@ -1,4 +1,5 @@
 import React from 'react';
+import TodoList from "./components/TodoComponents/TodoList";
 
 
 
@@ -24,17 +25,19 @@ class App extends React.Component {
   manageSubmit = event => {
     event.preventDefault();
     console.log("Submission!!!");
+    document.querySelector("input").value="";    
   }
   
   handleChange = event => {
     let taskList = this.state.stuffToDo;
     console.log(event.target.value);
-    this.setState([...taskList, {task: event.target.value, id: Date.now(), completed: false}]);
+    this.setState({stuffToDo: [...taskList, {task: event.target.value, id: Date.now(), completed: false}]});
     console.log("l'etat, c'est moi!", this.state);
+
   }
 
   clearList = () => {
-    this.setState({task: "", id: null, completed: null});
+    this.setState({stuffToDo: [{task: "", id: null, completed: null}]});
     console.log("are we empty?", this.state);
   }
 
@@ -48,9 +51,10 @@ class App extends React.Component {
             <button onClick={this.clearList}>Clear all!</button>
         </form>
         <div>
-          <ul>
+          {/* <ul>
             {this.state.stuffToDo.map(thing => <li key={thing.id}>{thing.task}</li>)}
-          </ul>
+          </ul> */}
+          <TodoList state={this.state} />
         </div>
       </div>
     );

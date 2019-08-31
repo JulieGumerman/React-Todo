@@ -1,14 +1,19 @@
 import React from 'react';
 
 
+
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
       stuffToDo : [
-       {task: "",
-       id: Date.now(),
+       {task: "pet dogs",
+       id: 1,
        completed: false
+      },
+      {task: "finish this assignment",
+        id: 2,
+        completed: false
       }
       ]
     }
@@ -22,9 +27,15 @@ class App extends React.Component {
   }
   
   handleChange = event => {
+    let taskList = this.state.stuffToDo;
     console.log(event.target.value);
-    this.setState({task: event.target.value, id: Date.now(), completed: false});
+    this.setState([...taskList, {task: event.target.value, id: Date.now(), completed: false}]);
     console.log("l'etat, c'est moi!", this.state);
+  }
+
+  clearList = () => {
+    this.setState({task: "", id: null, completed: null});
+    console.log("are we empty?", this.state);
   }
 
   render() {
@@ -34,8 +45,13 @@ class App extends React.Component {
         <form onSubmit={event =>this.manageSubmit(event)}>
             <input type="text" placeholder="to do" onChange={this.handleChange}></input>
             <button type="submit">Commit to the thing!</button>
-            <button>Clear all!</button>
+            <button onClick={this.clearList}>Clear all!</button>
         </form>
+        <div>
+          <ul>
+            {this.state.stuffToDo.map(thing => <li key={thing.id}>{thing.task}</li>)}
+          </ul>
+        </div>
       </div>
     );
   }

@@ -2,18 +2,17 @@
 // feel free to change this component.js into TodoList.js
 
 import React from "react";
+import Todo from "./Todo";
 
 const TodoList = props => {
-    
-    const clicked = () => {
-        alert(`You clicked on me! Ouch!`);
-    }
+
 
     return (
-        <ul>
-            {props.state.stuffToDo.map(thing => <li key={thing.id} onClick={clicked}>{thing.task}</li>)}
-        </ul>
+        <div>
+            {props.state.stuffToDo.map(thing => <Todo key={thing.id} todo={thing} toggleCompleted={props.toggleCompleted}/>)}
+        </div>
     );
 }
 
 export default TodoList;
+

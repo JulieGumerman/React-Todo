@@ -1,5 +1,6 @@
 import React from 'react';
 import TodoList from "./components/TodoComponents/TodoList";
+import TodoForm from "./components/TodoComponents/TodoForm";
 
 
 
@@ -16,45 +17,55 @@ class App extends React.Component {
         id: 2,
         completed: false
       }
-      ]
+      ],
+      task: ""
     }
   }
-  // you will need a place to store your state in this component.
-  // design `App` to be the parent component of your application.
-  // this component is going to take care of state, and any change handlers you need to work with your state
-  manageSubmit = event => {
-    event.preventDefault();
-    console.log("Submission!!!");
-    document.querySelector("input").value="";    
+
+  toggleCompleted = id => {
+    console.log(id);
+    this.setState({
+      stuffToDo: this.state.stuffToDo.map(todo => {
+        if (id===todo.id) {
+          return {...todo, completed: !todo.completed};
+        } else {
+          return todo;
+        }
+      })//ends map
+    }) //ends set state
   }
-  
-  handleChange = event => {
-    let taskList = this.state.stuffToDo;
-    console.log(event.target.value);
-    this.setState({stuffToDo: [...taskList, {task: event.target.value, id: Date.now(), completed: false}]});
-    console.log("l'etat, c'est moi!", this.state);
+
+  clearCompleted = () => {
+    this.setState({ 
+      stuffToDo: this.state.stuffToDo.filter(todo => {
+        return !todo.completed;
+      })
+    })
+  }
+
+
+  addToDo= task => {
+    this.setState({
+      stuffToDo: [...this.state.stuffToDo, {
+        task: task, 
+        id: Date.now(),
+        completed: false
+      }],
+
+    })
 
   }
 
-  clearList = () => {
-    this.setState({stuffToDo: [{task: "", id: null, completed: null}]});
-    console.log("are we empty?", this.state);
-  }
+
 
   render() {
     return (
       <div>
         <h2>Welcome to your Todo App!</h2>
-        <form onSubmit={event =>this.manageSubmit(event)}>
-            <input type="text" placeholder="to do" onChange={this.handleChange}></input>
-            <button type="submit">Commit to the thing!</button>
-            <button onClick={this.clearList}>Clear all!</button>
-        </form>
+
+        <TodoForm addToDo={this.addToDo} clearCompleted={this.clearCompleted}/>
         <div>
-          {/* <ul>
-            {this.state.stuffToDo.map(thing => <li key={thing.id}>{thing.task}</li>)}
-          </ul> */}
-          <TodoList state={this.state} />
+          <TodoList state={this.state} toggleCompleted={this.toggleCompleted} />
         </div>
       </div>
     );

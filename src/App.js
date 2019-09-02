@@ -2,7 +2,7 @@ import React from 'react';
 import TodoList from "./components/TodoComponents/TodoList";
 import TodoForm from "./components/TodoComponents/TodoForm";
 
-
+//This is a random extra note so I could open a pull request. When I started this assignment, I thought it was recommended rather than required, which is why I did not open an additional branch. 
 
 class App extends React.Component {
   constructor() {

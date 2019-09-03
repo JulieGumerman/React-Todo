@@ -2,7 +2,7 @@ import React from 'react';
 import TodoList from "./components/TodoComponents/TodoList";
 import TodoForm from "./components/TodoComponents/TodoForm";
 
-
+//This is a random extra note so I could open a pull request. When I started this assignment, I thought it was recommended rather than required, which is why I did not open an additional branch. 
 
 class App extends React.Component {
   constructor() {
@@ -21,6 +21,23 @@ class App extends React.Component {
       task: ""
     }
   }
+
+  //local storage
+  componentDidMount() {
+    var stateString = localStorage.getItem("stateString");
+    if (stateString) {
+      var savedState = JSON.parse(stateString);
+      this.setState(savedState);
+    }
+  }
+
+  componentDidUpdate() {
+    var stateString = JSON.stringify(this.state);
+    localStorage.setItem("stateString", stateString);
+  }
+
+
+  //methods for toggling classes, adding info to state, and clearing completed objects
 
   toggleCompleted = id => {
     console.log(id);
